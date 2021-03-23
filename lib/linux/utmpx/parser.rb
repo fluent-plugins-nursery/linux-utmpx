@@ -18,6 +18,7 @@ module Linux
       UT_LINESIZE = 32
       UT_NAMESIZE = 32
       UT_HOSTSIZE = 256
+      UT_IDSIZE = 4
 
       endian :little
 
@@ -25,7 +26,7 @@ module Linux
       int16 :pad_type # Align
       int32 :ut_pid
       string :ut_line, :length => UT_LINESIZE, :trim_padding => true
-      string :ut_id, :length => 4, :trim_padding => true
+      string :ut_id, :length => UT_IDSIZE, :trim_padding => true
       string :ut_user, :length => UT_NAMESIZE, :trim_padding => true
       string :ut_host, :length => UT_HOSTSIZE, :trim_padding => true
       exitstatus :ut_exit
