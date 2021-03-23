@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Kentaro Hayashi"]
   spec.email         = ["kenhys@gmail.com"]
 
-  spec.summary       = "TODO: Write a short summary, because RubyGems requires one."
-  spec.description   = "TODO: Write a longer description or delete this line."
+  spec.summary       = "Helper library to read utmp, wtmp login records"
+  spec.description   = "Library to read login records from /var/log/wtmp, /var/run/utmp"
   spec.homepage      = "https://github.com/fluent-plugins-nursery/linux-utmpx"
   spec.license       = "MIT"
   spec.required_ruby_version = Gem::Requirement.new(">= 2.4.0")
