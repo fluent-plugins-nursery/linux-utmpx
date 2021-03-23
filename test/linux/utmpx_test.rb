@@ -30,7 +30,7 @@ class Linux::UtmpxParserTest < Test::Unit::TestCase
     io = File.open(dump_fixture_path("alice_login"))
     entry = @parser.read(io)
     expected = {
-      type: Linux::Utmpx::Type::USER_PROCESS,
+      type: :USER_PROCESS,
       pid: 121110,
       line: "tty7",
       id: ":0  ",

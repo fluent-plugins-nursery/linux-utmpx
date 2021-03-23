@@ -43,7 +43,7 @@ module Linux
 
       def type
         Linux::Utmpx::Type.constants.each do |sym|
-          return Linux::Utmpx::Type.const_get(sym) if Linux::Utmpx::Type.const_get(sym) == ut_type
+          return sym if Linux::Utmpx::Type.const_get(sym) == ut_type
         end
         ut_type
       end
