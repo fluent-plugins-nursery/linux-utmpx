@@ -40,6 +40,33 @@ module Linux
       def time
         Time.at(ut_tv.tv_sec, ut_tv.tv_usec)
       end
+
+      def type
+        Linux::Utmpx::Type.constants.each do |sym|
+          return Linux::Utmpx::Type.const_get(sym) if Linux::Utmpx::Type.const_get(sym) == ut_type
+        end
+        ut_type
+      end
+
+      def pid
+        ut_pid
+      end
+
+      def line
+        ut_line
+      end
+
+      def user
+        ut_user
+      end
+
+      def id
+        ut_id
+      end
+
+      def host
+        ut_host
+      end
     end
 
   end

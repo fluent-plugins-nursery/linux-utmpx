@@ -26,6 +26,29 @@ class Linux::UtmpxParserTest < Test::Unit::TestCase
     assert_equal(expected, types)
   end
 
+  test "alias" do
+    io = File.open(dump_fixture_path("alice_login"))
+    entry = @parser.read(io)
+    expected = {
+      type: Linux::Utmpx::Type::USER_PROCESS,
+      pid: 121110,
+      line: "tty7",
+      id: ":0  ",
+      user: "alice",
+      host: ":0",
+      time: Time.parse("2021-03-23 15:49:58.716235 +0900")
+    }
+    assert_equal(expected, {
+                   type: entry.type,
+                   pid: entry.pid,
+                   line: entry.line,
+                   id: entry.id,
+                   user: entry.user,
+                   host: entry.host,
+                   time: entry.time
+                 })
+  end
+
   test "alice login" do
     io = File.open(dump_fixture_path("alice_login"))
     entry = @parser.read(io)
