@@ -14,8 +14,6 @@ Gem::Specification.new do |spec|
   spec.license       = "MIT"
   spec.required_ruby_version = Gem::Requirement.new(">= 2.4.0")
 
-  spec.metadata["allowed_push_host"] = "TODO: Set to 'http://mygemserver.com'"
-
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = "https://github.com/fluent-plugins-nursery/linux-utmpx"
   spec.metadata["changelog_uri"] = "https://github.com/fluent-plugins-nursery/linux-utmpx/CHANGELOG.md"
