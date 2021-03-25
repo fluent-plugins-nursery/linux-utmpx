@@ -9,6 +9,9 @@ end
 parser.on("-w", "--wtmp", "Dump /var/log/wtmp") do |v|
   options[:wtmp] = v
 end
+parser.on("-d", "--delayed", "Dump with delayed IO") do |v|
+  options[:delayed] = v
+end
 parser.parse!(ARGV)
 
 path = "/var/run/utmp"
@@ -27,8 +30,19 @@ end
 File.open(path, "rb") do |io|
   utmpx = Linux::Utmpx::UtmpxParser.new
   printf("%20s %10s %s@%s\n", "TYPE", "PID", "USER", "HOST")
-  while !io.eof?
-    entry = utmpx.read(io)
-    printf("%20s %10d %s@%s\n", entry.type, entry.pid, entry.user, entry.host)
+  if options[:delayed]
+    obj = BinData::DelayedIO.new(type: Linux::Utmpx::UtmpxParser, read_abs_offset: 0)
+    while !io.eof?
+      obj.read(io.read(384)) do
+        obj.read_now!
+        printf("%20s %10d %s@%s\n", obj.type, obj.pid, obj.user, obj.host)
+      end
+    end
+  else
+    while !io.eof?
+      p io.pos
+      entry = utmpx.read(io)
+      printf("%20s %10d %s@%s\n", entry.type, entry.pid, entry.user, entry.host)
+    end
   end
 end
