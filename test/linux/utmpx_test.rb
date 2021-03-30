@@ -16,59 +16,67 @@ class Linux::UtmpxParserTest < Test::Unit::TestCase
     @parser = Linux::Utmpx::UtmpxParser.new
   end
 
-  test "types of ut_type" do
-    io = File.open(dump_fixture_path("utmpx_type"))
-    types = []
-    while !io.eof? do
-      types << @parser.read(io)[:ut_type].dup
+  sub_test_case "ut_ prefix access" do
+
+    test "read utmpx_dummy" do
+      io = File.open(dump_fixture_path("utmpx_dummy"))
+      n = 1
+      while !io.eof? do
+        entry = @parser.read(io)
+        expected = [
+          n,
+          n * 1000,
+          "tty#{n}",
+          "id#{n} ",
+          "alice#{n}",
+          "host#{n}",
+        ]
+        assert_equal(expected, [entry.ut_type, entry.ut_pid, entry.ut_line, entry.ut_id, entry.ut_user, entry.ut_host])
+        n += 1
+      end
     end
-    expected = 9.times.each.collect do |i| i + 1 end
-    assert_equal(expected, types)
   end
 
-  test "alias" do
-    io = File.open(dump_fixture_path("alice_login"))
-    entry = @parser.read(io)
-    expected = {
-      type: :USER_PROCESS,
-      pid: 121110,
-      line: "tty7",
-      id: ":0  ",
-      user: "alice",
-      host: ":0",
-      time: Time.parse("2021-03-23 15:49:58.716235 +0900")
-    }
-    assert_equal(expected, {
-                   type: entry.type,
-                   pid: entry.pid,
-                   line: entry.line,
-                   id: entry.id,
-                   user: entry.user,
-                   host: entry.host,
-                   time: entry.time
-                 })
-  end
+  sub_test_case "alias access" do
 
-  test "alice login" do
-    io = File.open(dump_fixture_path("alice_login"))
-    entry = @parser.read(io)
-    expected = {
-      ut_type: 7,
-      ut_pid: 121110,
-      ut_line: "tty7",
-      ut_id: ":0  ",
-      ut_user: "alice",
-      ut_host: ":0",
-      time: Time.parse("2021-03-23 15:49:58.716235 +0900")
-    }
-    assert_equal(expected, {
-                   ut_type: entry[:ut_type],
-                   ut_pid: entry[:ut_pid],
-                   ut_line: entry[:ut_line],
-                   ut_id: entry[:ut_id],
-                   ut_user: entry[:ut_user],
-                   ut_host: entry[:ut_host],
-                   time: entry.time
-                 })
+    EXPECTED_TYPES = %i(EMPTY RUN_LVL BOOT_TIME NEW_TIME OLD_TIME INIT_PROCESS LOGIN_PROCESS USER_PROCESS DEAD_PROCESS ACCOUNTING)
+
+    test "alias read" do
+      io = File.open(dump_fixture_path("utmpx_dummy"))
+      n = 1
+      while !io.eof? do
+        entry = @parser.read(io)
+        expected = [
+          EXPECTED_TYPES[n],
+          n * 1000,
+          "tty#{n}",
+          "id#{n} ",
+          "alice#{n}",
+          "host#{n}",
+        ]
+        assert_equal(expected, [entry.type, entry.pid, entry.line, entry.id, entry.user, entry.host])
+        n += 1
+      end
+    end
+
+    test "parsed types" do
+      io = File.open(dump_fixture_path("utmpx_dummy"))
+      n = 1
+      while !io.eof? do
+        entry = @parser.read(io)
+        assert_equal(EXPECTED_TYPES[n], entry.type)
+        n += 1
+      end
+    end
+
+    test "parsed time" do
+      io = File.open(dump_fixture_path("utmpx_dummy"))
+      n = 1
+      while !io.eof? do
+        entry = @parser.read(io)
+        assert_equal(Time.parse("2021-03-2#{n}T06:49:58,716235+00:00"), entry.time)
+        n += 1
+      end
+    end
   end
 end
