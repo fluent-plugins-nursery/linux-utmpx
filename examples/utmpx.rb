@@ -1,5 +1,6 @@
 require "linux/utmpx"
 require "optparse"
+require "time"
 
 options = {}
 parser = OptionParser.new
