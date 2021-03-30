@@ -40,7 +40,6 @@ File.open(path, "rb") do |io|
     end
   else
     while !io.eof?
-      p io.pos
       entry = utmpx.read(io)
       printf("%20s %10d %s@%s\n", entry.type, entry.pid, entry.user, entry.host)
     end
