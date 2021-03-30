@@ -20,4 +20,4 @@ jobs:
       run: |
         gem install bundler
         bundle install
-        TESTOPTS="--verbose" bundle exec rake
+        TZ=Asia/Tokyo TESTOPTS="--verbose" bundle exec rake
