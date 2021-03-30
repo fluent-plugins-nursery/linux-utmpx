@@ -33,7 +33,7 @@ module Linux
       int32 :ut_session
       uttv  :ut_tv
       array :ut_addr_v6, :initial_length => 4 do
-        int32
+        int32be
       end
       string :reserved, :length => 20
 

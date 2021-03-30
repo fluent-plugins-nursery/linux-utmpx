@@ -35,6 +35,12 @@ class Linux::UtmpxParserTest < Test::Unit::TestCase
         n += 1
       end
     end
+
+    test "read ipv4" do
+      io = File.open(dump_fixture_path("utmpx_ipv4"))
+      entry = @parser.read(io)
+      assert_equal(IPAddr.new("127.0.0.1").to_i, entry.ut_addr_v6[0])
+    end
   end
 
   sub_test_case "alias access" do
