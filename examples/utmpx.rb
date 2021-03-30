@@ -29,19 +29,21 @@ end
 
 File.open(path, "rb") do |io|
   utmpx = Linux::Utmpx::UtmpxParser.new
-  printf("%20s %10s %s@%s\n", "TYPE", "PID", "USER", "HOST")
+  printf("%25s %14s %7s %10s %20s %10s %10s\n", "TIME", "TYPE", "PID", "USER", "HOST", "ID", "LINE")
   if options[:delayed]
     obj = BinData::DelayedIO.new(type: Linux::Utmpx::UtmpxParser, read_abs_offset: 0)
     while !io.eof?
       obj.read(io.read(384)) do
         obj.read_now!
-        printf("%20s %10d %s@%s\n", obj.type, obj.pid, obj.user, obj.host)
+        printf("%25s %14s %7d %10s %20s %10s %10s\n",
+               obj.time, obj.type, obj.pid, obj.user, obj.host, obj.id, obj.line)
       end
     end
   else
     while !io.eof?
       entry = utmpx.read(io)
-      printf("%20s %10d %s@%s\n", entry.type, entry.pid, entry.user, entry.host)
+      printf("%25s %14s %7d %10s %20s %10s %10s\n",
+             entry.time, entry.type, entry.pid, entry.user, entry.host, entry.id, entry.line)
     end
   end
 end
