@@ -34,15 +34,15 @@ end
 
 `Linux::Utmpx::UtmpxParser` supports to read the following fields.
 
-| parameter | type    | description                 |
-|-----------|---------|-----------------------------|
-| ut_type   | integer | Type of login               |
-| ut_pid    | integer | Process ID of login process |
-| ut_line   | string  | Device name                 |
-| ut_id     | string  | Inittab ID                  |
-| ut_user   | string  | Username                    |
-| ut_host   | string  | Hostname for remote login   |
-| ut_tv     | string  | Time entry                  |
+| parameter | type            | description                 |
+|-----------|-----------------|-----------------------------|
+| ut_type   | integer         | Type of login               |
+| ut_pid    | integer         | Process ID of login process |
+| ut_line   | string          | Device name                 |
+| ut_id     | string          | Inittab ID                  |
+| ut_user   | string          | Username                    |
+| ut_host   | string          | Hostname for remote login   |
+| ut_tv     | BinData::Record | Time entry                  |
 
 For making access easy, there are some shorten accessor methods are provided.
 
