@@ -80,7 +80,7 @@ class Linux::UtmpxParserTest < Test::Unit::TestCase
       n = 1
       while !io.eof? do
         entry = @parser.read(io)
-        assert_equal(Time.parse("2021-03-2#{n}T06:49:58,716235+00:00"), entry.time)
+        assert_equal(Time.parse("2021-03-2#{n}T15:49:58,716235+09:00").iso8601, entry.time)
         n += 1
       end
     end
