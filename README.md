@@ -34,27 +34,27 @@ end
 
 `Linux::Utmpx::UtmpxParser` supports to read the following fields.
 
-* ut_type
-* ut_pid
-* ut_line
-* ut_id
-* ut_user
-* ut_host
-* ut_tv
+| parameter | type    | description                 |
+|-----------|---------|-----------------------------|
+| ut_type   | integer | Type of login               |
+| ut_pid    | integer | Process ID of login process |
+| ut_line   | string  | Device name                 |
+| ut_id     | string  | Inittab ID                  |
+| ut_user   | string  | Username                    |
+| ut_host   | string  | Hostname for remote login   |
+| ut_tv     | string  | Time entry                  |
 
 For making access easy, there are some shorten accessor methods are provided.
 
-* type
-
-  * it returns `:EMPTY`, `:RUN_LVL`, `:BOOT_TIME`, `:NEW_TIME`, `:OLD_TIME`, `:INIT_PROCESS`, `:LOGIN_PROCESS`, `:USER_PROCESS`, `:DEAD_PROCESS` or `:ACCOUNTING`.
-* pid
-* line
-* id
-* user
-* host
-* time
-  * it returns the value of `Time`.
-
+| parameter | type    | description                                                                                                                                                                   |
+|-----------|---------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| type      | integer | Type of login. It returns `:EMPTY`, `:RUN_LVL`, `:BOOT_TIME`, `:NEW_TIME`, `:OLD_TIME`, `:INIT_PROCESS`, `:LOGIN_PROCESS`, `:USER_PROCESS`, `:DEAD_PROCESS` or `:ACCOUNTING`. |
+| pid       | integer | Process ID of login process                                                                                                                                                   |
+| line      | string  | Device name                                                                                                                                                                   |
+| id        | string  | Inittab ID                                                                                                                                                                    |
+| user      | string  | Username                                                                                                                                                                      |
+| host      | string  | Hostname for remote login                                                                                                                                                     |
+| time      | Time    | Time entry.it returns the value of `Time`.                                                                                                                                    |
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test-unit` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
