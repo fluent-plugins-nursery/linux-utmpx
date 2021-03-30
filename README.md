@@ -30,6 +30,30 @@ while !io.eof? do
 end
 ```
 
+## Supported fields
+
+`Linux::Utmpx::UtmpxParser` supports to read the following fields.
+
+* ut_type
+* ut_pid
+* ut_line
+* ut_id
+* ut_user
+* ut_host
+* ut_tv
+
+For making access easy, there are some shorten accessor methods are provided.
+
+* type
+
+  * it returns `:EMPTY`, `:RUN_LVL`, `:BOOT_TIME`, `:NEW_TIME`, `:OLD_TIME`, `:INIT_PROCESS`, `:LOGIN_PROCESS`, `:USER_PROCESS`, `:DEAD_PROCESS` or `:ACCOUNTING`.
+* pid
+* line
+* id
+* user
+* host
+* time
+  * it returns the value of `Time`.
 
 ## Development
 
