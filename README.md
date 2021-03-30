@@ -44,7 +44,7 @@ end
 | ut_host   | string          | Hostname for remote login   |
 | ut_tv     | BinData::Record | Time entry                  |
 
-For making access easy, there are some shorten accessor methods are provided.
+For making access easy, these accessor methods are provided.
 
 | parameter | type    | description                                                                                                                                                                   |
 |-----------|---------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
