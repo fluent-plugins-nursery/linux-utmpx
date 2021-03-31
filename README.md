@@ -32,6 +32,12 @@ while !io.eof? do
 end
 ```
 
+By the above example, it prints the following records.
+
+```
+{:ut_type=>7, :pad_type=>0, :ut_pid=>3018, :ut_line=>"tty7", :ut_id=>":0", :ut_user=>"kenhys", :ut_host=>":0", :ut_exit=>{:e_termination=>0, :e_exit=>0}, :ut_session=>0, :ut_tv=>{:tv_sec=>1614902638, :tv_usec=>26903}, :ut_addr_v6=>[0, 0, 0, 0], :reserved=>"..."}
+```
+
 ## Supported fields
 
 `Linux::Utmpx::UtmpxParser` supports to read the following fields.
