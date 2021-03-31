@@ -38,7 +38,7 @@ module Linux
       string :reserved, :length => 20
 
       def time
-        Time.at(ut_tv.tv_sec, ut_tv.tv_usec).iso8601
+        Time.at(ut_tv.tv_sec, ut_tv.tv_usec)
       end
 
       def type
