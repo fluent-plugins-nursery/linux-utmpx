@@ -23,6 +23,8 @@ Or install it yourself as:
 Read all records in `/var/log/wtmp`.
 
 ```ruby
+require "linux/utmpx"
+
 io = File.open("/var/log/wtmp")
 parser = Linux::Utmpx::UtmpxParser.new
 while !io.eof? do
