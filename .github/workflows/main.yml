@@ -8,7 +8,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        ruby: [ '2.5', '2.6', '2.7', '3.0' ]
+        ruby: [ '3.2', '3.3', '3.4', '4.0' ]
     name: Ruby ${{ matrix.ruby }} unit testing on ubuntu-latest
     steps:
     - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -16,8 +16,8 @@ jobs:
       uses: ruby/setup-ruby@09a7688d3b55cf0e976497ff046b70949eeaccfd # v1.288.0
       with:
         ruby-version: ${{ matrix.ruby }}
+        bundler_cache: true
     - name: Run the default task
       run: |
-        gem install bundler
         bundle install
         TZ=Asia/Tokyo TESTOPTS="--verbose" bundle exec rake
