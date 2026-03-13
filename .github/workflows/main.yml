@@ -1,14 +1,28 @@
 name: Ruby
 
-on: [push,pull_request]
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: '0 0 1 * *'
 
 jobs:
+  ruby-versions:
+    uses: ruby/actions/.github/workflows/ruby_versions.yml@master
+    with:
+      engine: cruby
+      min_version: 3.2
   build:
+    needs: ruby-versions
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        ruby: [ '3.2', '3.3', '3.4', '4.0' ]
+        ruby: ${{ fromJson(needs.ruby-versions.outputs.versions) }}
+        exclude:
+          - ruby: head
     name: Ruby ${{ matrix.ruby }} unit testing on ubuntu-latest
     steps:
     - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -16,8 +30,7 @@ jobs:
       uses: ruby/setup-ruby@6ca151fd1bfcfd6fe0c4eb6837eb0584d0134a0c # v1.290.0
       with:
         ruby-version: ${{ matrix.ruby }}
-        bundler_cache: true
+        bundler-cache: true
     - name: Run the default task
       run: |
-        bundle install
         TZ=Asia/Tokyo TESTOPTS="--verbose" bundle exec rake
